@@ -1,0 +1,52 @@
+b *0x4008c6
+b *0x400906
+r < ./payload
+
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+c
+i r edx esi eax ecx
+

@@ -14,7 +14,7 @@ def getLen():
         pin = Popen([pinPath, '-t', './myInscount1.so', '--', './re'], stdin = PIPE, stdout = PIPE)
         pin.stdin.write('_' * i + '\n')
         out, err = pin.communicate()
-        now = int(out.split('Count')[1])
+        now = int(out.split('Count: ')[1])
         delta = now - last
         print "inputLen({}) -> int({}) -> delta({})".format(i, now, delta)
         if delta > 10000 and i:

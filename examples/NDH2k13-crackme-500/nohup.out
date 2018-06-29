@@ -1,0 +1,23 @@
+002c:fixme:vcruntime:__telemetry_main_invoke_trigger (0x67000000)
+002c:fixme:vcruntime:__telemetry_main_invoke_trigger (0x530000)
+002c:fixme:vcruntime:__telemetry_main_invoke_trigger (0x65000000)
+002c:fixme:vcruntime:__telemetry_main_invoke_trigger (0x180000000)
+002c:fixme:file:FindFirstFileExW flags not implemented 0x00000002
+002c:fixme:vcruntime:__telemetry_main_invoke_trigger (0xe10000)
+002c:fixme:process:SetProcessDEPPolicy (3): stub
+002c:fixme:vcruntime:__telemetry_main_invoke_trigger (0x61a0000)
+002c:fixme:vcruntime:__telemetry_main_return_trigger (0x61a0000)
+002c:fixme:process:GetSystemDEPPolicy stub
+002c:fixme:process:GetSystemDEPPolicy stub
+002c:fixme:process:GetSystemDEPPolicy stub
+002c:fixme:process:GetSystemDEPPolicy stub
+002c:fixme:process:GetSystemDEPPolicy stub
+002c:fixme:process:GetSystemDEPPolicy stub
+002c:fixme:msvcrt:__clean_type_info_names_internal (0xa179aa8) stub
+002c:fixme:msvcrt:__clean_type_info_names_internal (0x1d1bdd68) stub
+002c:fixme:msvcrt:__clean_type_info_names_internal (0x1e31e2e8) stub
+002c:fixme:vcruntime:__telemetry_main_return_trigger (0xe10000)
+002c:fixme:vcruntime:__telemetry_main_return_trigger (0x180000000)
+002c:fixme:vcruntime:__telemetry_main_return_trigger (0x65000000)
+002c:fixme:vcruntime:__telemetry_main_return_trigger (0x530000)
+002c:fixme:vcruntime:__telemetry_main_return_trigger (0x67000000)

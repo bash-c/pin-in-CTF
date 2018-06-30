@@ -502,6 +502,8 @@ Good password
 
 这样，我们用不到5分钟的时间就猜出了flag
 
+> inscount1(BB级插桩)与inscount0(ins级插桩)效果相同，但inscount1速度更快，实际解题时可以用inscount1代替inscount
+
 ### hxpCTF-2017-main_strip
 
 再以hxpCTF2017的一道题目演示改造pintool用于解题，我们着重演示改造pintool的步骤，因此恢复符号表和分析程序流程的部分可以参考这篇[writeup](http://eternal.red/2017/dont_panic-writeup/)

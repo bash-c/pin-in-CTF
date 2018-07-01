@@ -1,18 +1,18 @@
 # intel pin
 
-## 什么是pin
+## 什么是 pin
 
-pin是intel开发的一款二进制程序的插桩分析工具，支持x86/x64 & windows/linux/mac，提供了丰富的API供使用者用C/C++编写pintool分析程序
+pin 是 intel 开发的一款二进制程序的插桩分析工具，支持 x86/x64 & windows/linux/mac，提供了丰富的 API 供使用者用 C/C++ 编写 pintool 分析程序
 
 ### 什么是插桩(instrument)
 
-通俗的来说，插桩就是在已有的源代码/二进制程序中插入某些代码以便于自己分析，比如在调试时使用printf打印变量值就属于在源代码级别的插桩。而intel pin就是在二进制程序级别（没有源代码）插桩的一款工具
+通俗的来说，插桩就是在已有的源代码/二进制程序中插入某些代码以便于自己分析，比如在调试时使用 printf 打印变量值就属于在源代码级别的插桩。而intel pin就是在二进制程序级别（没有源代码）插桩的一款工具
 
-## pin和pintool
+## pin 和 pintool
 
-### pin的安装，pintool的编译
+### pin 的安装，pintool 的编译
 
-pin的安装很简单，这里以64位的Linux为例来说明，从[官网](https://software.intel.com/en-us/articles/pin-a-binary-instrumentation-tool-downloads)上下载pin组件后，解压即可，在解压后的文件夹内有编译好的二进制程序pin
+pin 的安装很简单，这里以 64 位的 Linux 为例来说明，从 [官网](https://software.intel.com/en-us/articles/pin-a-binary-instrumentation-tool-downloads) 上下载 pin 组件后，解压即可，在解压后的文件夹内有编译好的二进制程序 pin
 
 ```bash
 pin-3.6-gcc-linux ls
@@ -28,7 +28,7 @@ Usage: pin [OPTION] [-t <tool> [<toolargs>]] -- <command line>
 Use -help for a description of options
 ```
 
-在**source/tools/ManualExamples**中有一些现成的pintool可以使用，基本涵盖了各个模块的用法，这里以inscount0这个pintool为例介绍pin的使用方法
+在 **source/tools/ManualExamples** 中有一些现成的 pintool 可以使用，基本涵盖了各个模块的用法，这里以 inscount0 这个 pintool 为例介绍 pin 的使用方法
 
 ```bash
 pin-3.6-gcc-linux cd source/tools/ManualExamples
@@ -41,34 +41,34 @@ ManualExamples file obj-intel64/inscount0.so
 obj-intel64/inscount0.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, BuildID[sha1]=3baa29dd54235acaab02edc94bf9ac377dd7b0e5, not stripped
 ```
 
-此时在obj-intel64下编译生成了inscount0.so，这个so即为一种pintool，功能为记录程序执行的指令的条数；
+此时在 obj-intel64 下编译生成了 inscount0.so，这个 so 即为一种 pintool，功能为记录程序执行的指令的条数；
 
->   判断pintool的功能可以阅读pintool源代码或者使用下条指令
+>   判断 pintool 的功能可以阅读 pintool 源代码或者使用下条指令
 >
 >   $ pin -t your\_pintool -h -- your_application
 
-类似的，要编译32位的pintool可以使用
+类似的，要编译 32 位的 pintool 可以使用
 
 ```bash
 make obj-ia32/inscount0.so
 ```
 
-编译ManualExamples中的所有pintool可以使用
+编译 ManualExamples 中的所有 pintool 可以使用
 
 ```bash
 make all TAEGET=intel64
 make all TAEGET=ia32
 ```
 
-### pin的使用
+### pin 的使用
 
-pin的基本命令格式如下
+pin 的基本命令格式如下
 
 ```bash
 pin -t your_pintool -- your_binary <arg> 
 ```
 
-以刚刚编译的inscount0这个pintool为例
+以刚刚编译的 inscount0 这个 pintool 为例
 
 ```bash
 ManualExamples ../../../pin -t ./obj-intel64/inscount0.so -- /bin/ls -a
@@ -94,11 +94,11 @@ ManualExamples cat inscount.out
 Count 813449
 ```
 
-inscount默认结果保存在inscount.out这个文件中，在上例中，即此时**ls -a**这条命令共执行了813449条指令
+inscount 默认结果保存在 inscount.out 这个文件中，在上例中，即此时 **ls -a** 这条命令共执行了 813449 条指令
 
-### pintool的分析
+### pintool 的分析
 
-同样以inscount0为例分析，查看inscount0.cpp的内容
+同样以 inscount0 为例分析，查看 inscount0.cpp 的内容
 
 ```C++
 #include <iostream>
@@ -170,7 +170,7 @@ int main(int argc, char * argv[])
 }
 ```
 
-从main开始，首先调用了PIN\_init（53行）进行初始化，然后使用INS_AddInstrumenFunction注册了一个插桩函数(58行)，根据intel pin的[用户手册](https://software.intel.com/sites/landingpage/pintool/docs/97619/Pin/html/)
+从 main 开始，首先调用了 PIN\_init（53 行）进行初始化，然后使用 INS_AddInstrumenFunction 注册了一个插桩函数(58行)，根据 intel pin 的 [用户手册](https://software.intel.com/sites/landingpage/pintool/docs/97619/Pin/html/)
 
 ```C
 PIN_CALLBACK LEVEL_PINCLIENT::INS_AddInstrumentFunction	(	INS_INSTRUMENT_CALLBACK 	fun,
@@ -191,9 +191,9 @@ O/S: Linux, Windows & OS X*
 CPU: All
 ```
 
-在这里该函数的作用是在指令粒度插入Instruction函数，即在每条指令执行前，都会进入Instruction这个函数中，其第2个参数为一个额外传递给Instruction的参数，即对应`VOID *v`这个参数，这里没有使用。而Instruction接受的第一个参数为`INS`结构，用来表示一条指令
+在这里该函数的作用是在指令粒度插入 Instruction 函数，即在每条指令执行前，都会进入 Instruction 这个函数中，其第2个参数为一个额外传递给 Instruction 的参数，即对应 `VOID *v` 这个参数，这里没有使用。而 Instruction 接受的第一个参数为 `INS` 结构，用来表示一条指令
 
-而我们再看Instruction这个函数
+而我们再看 Instruction 这个函数
 
 ```C
 VOID Instruction(INS ins, VOID *v)
@@ -203,9 +203,9 @@ VOID Instruction(INS ins, VOID *v)
 }
 ```
 
-在Instruction函数内部又使用INS\_InsertCall注册了一个函数docount，即在每条指令前实际插入了docount这个函数。需要注意的是INS\_InsertCall试一个便餐函数，前三个参数分别为指令(ins)，插入的实际(IPOINT\_BEFORE，表示在指令运行之前插入docount函数)，函数指针(docount，转化为了AFUNPTR类型)，之后的参数为传递给docount函数的参数，以IARG_END 结尾
+在 Instruction 函数内部又使用 INS\_InsertCall 注册了一个函数 docount，即在每条指令前实际插入了 docount 这个函数。需要注意的是 INS\_InsertCall 试一个便餐函数，前三个参数分别为指令(ins)，插入的实际(IPOINT\_BEFORE，表示在指令运行之前插入 docount 函数)，函数指针(docount，转化为了 AFUNPTR 类型)，之后的参数为传递给 docount 函数的参数，以 IARG\_END 结尾
 
-而docount函数（12行）的作用就很明显了，每次将一个全局变量加1，因此此时/bin/ls -a运行的模式如下:
+而 docount 函数（12 行）的作用就很明显了，每次将一个全局变量加 1，因此此时 /bin/ls -a 运行的模式如下:
 
 ```assembly
 ...
@@ -222,21 +222,21 @@ add $0x10, %eax
 ...
 ```
 
-所以inscount0的用途就很明显了，每条指令前都调用docount函数将全局变量icount自增，最后通过PIN\_AddFiniFunction函数注册的Fini函数(25行)将结果写到一个文件中。
+所以 inscount0 的用途就很明显了，每条指令前都调用 docount 函数将全局变量 icount 自增，最后通过PIN\_AddFiniFunction 函数注册的 Fini 函数(25行)将结果写到一个文件中。
 
-当这些函数都定义完后，就可以使用PIN\_StartProgram来启动程序了
+当这些函数都定义完后，就可以使用 PIN\_StartProgram 来启动程序了
 
-这里分析了一个最简单的pintool例子，更多pintool例子的分析和其他函数的使用可以参考BrieflyX的[博客](http://brieflyx.me/2017/binary-analysis/intel-pin-intro/)
+这里分析了一个最简单的 pintool 例子，更多 pintool 例子的分析和其他函数的使用可以参考 BrieflyX 的 [博客](http://brieflyx.me/2017/binary-analysis/intel-pin-intro/)
 
 
 
 ## pin in CTF
 
-因为动态插桩有不重新编译即可收集二进制程序某些信息的特性，因此用pin求解**一部分**CTF challenges会异常的方便，下边给出一些例子和分析
+因为动态插桩有不重新编译即可收集二进制程序某些信息的特性，因此用 pin 求解**一部分** CTF challenges 会异常的方便，下边给出一些例子和分析
 
 ### NDH2K13-crackme-500
 
-首先用常规方法对crackme文件进行分析
+首先用常规方法对 crackme 文件进行分析
 
 ```bash
 NDH2k13-crackme-500 [master] file crackme 
@@ -254,7 +254,7 @@ Password: test
 Bad password
 ```
 
-发现section header受到了损坏，用IDA打开时也有很多报错，这时我们尝试使用intel pin来求解这道题目，先使用最常见的统计指令条数的方法
+发现 section header 受到了损坏，用 IDA 打开时也有很多报错，这时我们尝试使用 intel pin 来求解这道题目，先使用最常见的统计指令条数的方法
 
 ```bash
 NDH2k13-crackme-500 [master] ~/pin-3.6-gcc-linux/pin -t ./inscount0.so -- ./crackme <<< "a" >> /dev/null; cat inscount.out 
@@ -296,9 +296,9 @@ True
 >>> 
 ```
 
-此时我们发现了一个很有趣的特性，输入长度每次增加1时，指令条数也是以等差的规模递增的
+此时我们发现了一个很有趣的特性，输入长度每次增加 1 时，指令条数也是以等差的规模递增的
 
->   myInscount0是我在inscount0的基础上更改的pintool，实现了从结果保存到文件到结果输出到标准输出的修改
+>   myInscount0 是我在 inscount0 的基础上更改的 pintool，实现了从结果保存到文件到结果输出到标准输出的修改
 
 我们写一个简单的脚本查看输入长度递增时，指令条数的变化规律
 
@@ -362,9 +362,9 @@ inputLen(28) -> ins(244188) -> delta(0)
 inputLen(29) -> ins(244188) -> delta(0)
 ```
 
-可以发现，在输入长度<8时，指令条数是递增的，但长度为8与长度为7比较发生了突变，这个时候我们就可以大胆的推测当输入长度为8时，程序的运行流程有了较大的变化，正确的flag长度即为8
+可以发现，在输入长度 <8 时，指令条数是递增的，但长度为 8 与长度为 7 比较发生了突变，这个时候我们就可以大胆的推测当输入长度为 8 时，程序的运行流程有了较大的变化，正确的 flag 长度即为 8
 
-我们以输入长度是8为前提，再查看不同输入下指令条数的变化规律
+我们以输入长度是 8 为前提，再查看不同输入下指令条数的变化规律
 
 ```bash
 NDH2k13-crackme-500 [master●] ~/pin-3.6-gcc-linux/pin -t ./myInscount0.so -- ./crackme <<< ">???????"
@@ -405,7 +405,7 @@ Password: Bad password
 Count: 185714
 ```
 
-可以发现，输入以ASCII码顺序递增时，第一位为A时指令条数发生了变化，此时我们在进一步推测正确的flag第一位即为A
+可以发现，输入以 ASCII码 顺序递增时，第一位为 A 时指令条数发生了变化，此时我们在进一步推测正确的 flag 第一位即为 A
 
 再写一个脚本逐位爆破
 
@@ -500,13 +500,13 @@ Password: AzI0wBsX
 Good password
 ```
 
-这样，我们用不到5分钟的时间就猜出了flag
+这样，我们用不到 5 分钟的时间就猜出了 flag
 
-> inscount1(BB级插桩)与inscount0(ins级插桩)效果相同，但inscount1速度更快，实际解题时可以用inscount1代替inscount
+> inscount1(BB级插桩) 与 inscount0(ins级插桩) 效果相同，但 inscount1 速度更快，实际解题时可以用 inscount1 代替 inscount0
 
 ### hxpCTF-2017-main_strip
 
-再以hxpCTF2017的一道题目演示改造pintool用于解题，我们着重演示改造pintool的步骤，因此恢复符号表和分析程序流程的部分可以参考这篇[writeup](http://eternal.red/2017/dont_panic-writeup/)
+再以 hxpCTF2017 的一道题目演示改造 pintool 用于解题，我们着重演示改造 pintool 的步骤，因此恢复符号表和分析程序流程的部分可以参考这篇 [writeup](http://eternal.red/2017/dont_panic-writeup/)
 
 我们先尝试用上例的方法解这道题目
 
@@ -528,7 +528,7 @@ Nope.
 Count: 582401
 ```
 
-很不幸，即使我们使用同一个输入，指令数也是有较大变化的，使用现有的pintool难以解出这道题目，我们进行更深一步的分析，验证flag的关键部分可以表示为如下代码
+很不幸，即使我们使用同一个输入，指令数也是有较大变化的，使用现有的 pintool 难以解出这道题目，我们进行更深一步的分析，验证 flag 的关键部分可以表示为如下代码
 
 ```C
 for (int i=0; i<length(provided_flag); i++)
@@ -542,7 +542,7 @@ for (int i=0; i<length(provided_flag); i++)
 }
 ```
 
-可以看出判断相等是逐位进行的，因此可以考虑对inscount0的docount函数做如下更改
+可以看出判断相等是逐位进行的，因此可以考虑对 inscount0 的 docount 函数做如下更改
 
 ```C
 更改前：
@@ -556,16 +556,16 @@ VOID docount(void *ip)
 }
 ```
 
-只有运行到0x47B96E一句才会计数，这样我们就可以根据pintool的结果来逐位爆破flag了
+只有运行到 0x47B96E 一句才会计数，这样我们就可以根据 pintool 的结果来逐位爆破 flag 了
 
->   然而，因为该题目的指令较多，指令级别的插桩会耗费较长时间，需要1h左右才能得到flag
+>   然而，因为该题目的指令较多，指令级别的插桩会耗费较长时间，需要1h左右才能得到 flag
 
 
 
 ##　总结
 
--   使用intel pin可以解一部分CTF challenges，尤其是虚拟机或者混淆严重的逆向题目，但pin的用途绝不局限于求解CTF challenges
--   使用pin可以解一部分CTF题目，但也仅仅是一部分题目，多数题目由于插桩代价大，难以提取侧信道信息，pintool难以编写等原因使用pin求解得不偿失，因此使用pin求解CTF challenges可以总结为下条原则：
+-   使用 intel pin 可以解一部分 CTF challenges，尤其是虚拟机或者混淆严重的逆向题目，但 pin 的用途绝不局限于求解 CTF challenges
+-   使用 pin 可以解一部分 CTF 题目，但也仅仅是一部分题目，多数题目由于插桩代价大，难以提取侧信道信息，pintool 难以编写等原因使用 pin 求解得不偿失，因此使用 pin 求解 CTF challenges 可以总结为下条原则：
     -   能用血赚，凉了不亏
 
 ## Reference
